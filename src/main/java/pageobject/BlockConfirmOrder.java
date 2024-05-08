@@ -1,6 +1,5 @@
-package pageObject;
+package pageobject;
 
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -21,10 +20,9 @@ public class BlockConfirmOrder {
     public BlockConfirmOrder(WebDriver driver){
         this.driver = driver;
     }
-    public void ConfirmOrderForRentBikeAndCheckAllowConfrim(String expectedAllowConfirmText) {
+    public void confirmOrderForRentBikeAndCheckAllowConfirm(String expectedAllowConfirmText) {
         driver.findElement(confirmOrderButtonYes).click();
         new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(allowConfirmText));
-        //Assert.assertEquals(expectedAllowConfirmText,driver.findElement(allowConfirmText).getText());
         assertTrue(driver.findElement(allowConfirmText).getText().contains(expectedAllowConfirmText));
     }
 }

@@ -6,13 +6,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import pageObject.*;
+import pageobject.*;
 
 @RunWith(Parameterized.class)
-public class CheckOrderBike {
-    private WebDriver driver;
-
+public class CheckOrderBike extends WebDriverSettings {
     private final String textOwnerName;
     private final String textOwnerSurname;
     private final String textOwnerAddress;
@@ -22,7 +19,6 @@ public class CheckOrderBike {
     private final int indexRentRentalPeriod;
     private final int indexRentColorBike;
     private final String textRentCommentForCourier;
-
 
     public CheckOrderBike(String textOwnerName, String textOwnerSurname,String textOwnerAddress, int indexOwnerSubway,String textOwnerPhoneNumber, int indexRentWhenArrivedDate,int indexRentRentalPeriod,int indexRentColorBike,String textRentCommentForCourier) {
         this.textOwnerName = textOwnerName;
@@ -44,18 +40,13 @@ public class CheckOrderBike {
         };
     }
 
-    @Before
-    public void startUp() {
-        WebDriverManager.chromedriver().setup();
-    }
-
     @Test
     public void checkConfirmOrderWithHeaderButton() {
         //System.setProperty("webdriver.gecko.driver", "src/test/resources/drivers/geckodriver.exe");
         //driver = new FirefoxDriver();
         driver = new ChromeDriver();
 
-        driver.get("https://qa-scooter.praktikum-services.ru/");
+        driver.get(UrlConstants.YANDEX_SAMOKAT_URL);
 
         OrderBikeButtons orderBikeButtons = new OrderBikeButtons(driver);
         orderBikeButtons.clickOrderHeaderButton();
@@ -70,7 +61,7 @@ public class CheckOrderBike {
 
         BlockConfirmOrder blockConfirmOrder = new BlockConfirmOrder(driver);
         String expectedTextConfirmRent="Заказ оформлен";
-        blockConfirmOrder.ConfirmOrderForRentBikeAndCheckAllowConfrim(expectedTextConfirmRent);
+        blockConfirmOrder.confirmOrderForRentBikeAndCheckAllowConfirm(expectedTextConfirmRent);
     }
 
     @Test
@@ -79,7 +70,7 @@ public class CheckOrderBike {
         //driver = new FirefoxDriver();
         driver = new ChromeDriver();
 
-        driver.get("https://qa-scooter.praktikum-services.ru/");
+        driver.get(UrlConstants.YANDEX_SAMOKAT_URL);
 
         OrderBikeButtons orderBikeButtons = new OrderBikeButtons(driver);
         orderBikeButtons.clickOrderMiddleButton();
@@ -94,11 +85,6 @@ public class CheckOrderBike {
 
         BlockConfirmOrder blockConfirmOrder = new BlockConfirmOrder(driver);
         String expectedTextConfirmRent="Заказ оформлен";
-        blockConfirmOrder.ConfirmOrderForRentBikeAndCheckAllowConfrim(expectedTextConfirmRent);
-    }
-
-    @After
-    public void teardown() {
-        driver.quit();
+        blockConfirmOrder.confirmOrderForRentBikeAndCheckAllowConfirm(expectedTextConfirmRent);
     }
 }
